@@ -1,5 +1,6 @@
-let intentos = 1;
-let numeroSecreto = generarNumeroAleatorio();
+let intentos = 0;
+let numeroSecreto = 0;
+condicionesIniciales();
 
 function generarNumeroAleatorio() {
     return Math.floor(Math.random()*10)+1;
@@ -30,9 +31,7 @@ function cargar(elemento, texto){
     return;
 }
 
-cargar('h1',"Juego del Número Secreto");
-cargar('p',"Indica un número del 1 al 10");
-
+// console.log(numeroSecreto);
 function verificarIntento() {
     let numeroDeUsuario = parseInt(document.getElementById ('valorUsuario').value);   //get element by ID obtiene los id de las etiquetas que tienen ID en el archivo HTML
     /*console.log(numeroSecreto);
@@ -40,10 +39,14 @@ function verificarIntento() {
     console.log(numeroDeUsuario);
     console.log(typeof(numeroDeUsuario));
     console.log (numeroDeUsuario === numeroSecreto); //El === compara tipo de dato y valor de las variables*/
-    
+
     if (numeroDeUsuario===numeroSecreto) {
         cargar('p', `Acertaste el número en ${intentos} ${(intentos === 1) ? "intento" : "intentos"}`);
-    }else{
+        document.getElementById('reiniciar').removeAttribute('disabled');
+        document.getElementById('botonIntentar').setAttribute('disabled','true');
+        
+        //El usuario no acerto
+    }else{ 
         if(numeroDeUsuario > numeroSecreto){
             cargar('p', "El número secreto es menor")
             
@@ -51,8 +54,35 @@ function verificarIntento() {
             cargar('p', "El número secreto es mayor")    
         }
         intentos++;
+        limpiarInput();
     }
     return;
 }
 
+//funcion que permite borrar la caja de texto
+function limpiarInput(){
+    document.querySelector('#valorUsuario').value = ''  //el query selector por ID con el simbolo # y el punto value = '' permite limpiar el textbox
+}
 
+//encapsula la actividad de colocar los mensajes titulo y parrafo, generar un numero aleatoria secreto nuevo e iniciar la variable intentos con el valor 1
+function condicionesIniciales(){
+    cargar('h1',"Juego del Número Secreto");
+    cargar('p',"Indica un número del 1 al 10");
+    numeroSecreto = generarNumeroAleatorio();
+    intentos = 1;
+}
+
+//funcion que permite iniciar un nuevo juego
+function nuevoJuego (){
+    // console.log(numeroSecreto);
+    //limpiar textbox
+    limpiarInput();
+    //reiniciar variable intentos
+    //generar un nuevo numero secreto
+    //resetear el parrafo del html
+    condicionesIniciales();    
+    //bloquear boton nuevo juego hasta que el usuario vuelva a ganar
+    document.getElementById('reiniciar').setAttribute('disabled','true');
+    //desbloquear boton intentar para comenzar a jugar
+    document.getElementById('botonIntentar').removeAttribute('disabled')
+}
