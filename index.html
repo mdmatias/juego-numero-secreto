@@ -12,8 +12,7 @@
     <title>JS Game</title>
 </head>
 
-<body onload="carga();">
-
+<body>
     <div class="container">
         <div class="container__contenido">
             <div class="container__informaciones">
@@ -21,7 +20,7 @@
                     <h1></h1>
                     <p class="texto__parrafo"></p>
                 </div>
-                <input type="number" min="1" max="10" class="container__input" id="valorUsuario">
+                <input type="number" min="1" max="10" class="container__input" id="valorUsuario" required>
                 <div class="chute container__botones">
                     <button onclick="verificarIntento();" class="container__boton">Intentar</button>
                     <button class="container__boton" id="reiniciar" disabled>Nuevo juego</button>
